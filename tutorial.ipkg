@@ -15,6 +15,7 @@ modules = Appendices.Neovim
 
         , Text.CSV
 
+        -- ** Part 1 **
         -- Chapter 1: Introduction
         , Tutorial.Intro
         , Tutorial.Intro.FirstIdrisProgram
@@ -110,3 +111,7 @@ modules = Appendices.Neovim
         , Tutorial.Prim.Integers
         , Tutorial.Prim.Refined
         , Solutions.Prim
+
+        -- ** Part 2: By Example **
+        -- Chapter 15: An MDBook Preprocessor in Idris 2
+        , Preprocessor

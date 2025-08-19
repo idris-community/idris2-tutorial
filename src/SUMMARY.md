@@ -122,6 +122,10 @@
   - [Exercises](./Tutorial/Prim/Exercises2.md)
   - [Refined Primitives](./Tutorial/Prim/Refined.md)
   - [Exercises](./Tutorial/Prim/Exercises3.md)
+  
+# Idris 2 by Example
+
+- [An MDBook Preprocessor in Idris 2](./Preprocessor.md)
 
 ______________________________________________________________________
 

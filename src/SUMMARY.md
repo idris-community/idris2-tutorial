@@ -126,6 +126,7 @@
 # Idris 2 by Example
 
 - [An MDBook Preprocessor in Idris 2](./Preprocessor.md)
+  - [The Preprocessor Executable](./Preprocessor/Binary.md)
 
 ______________________________________________________________________
 

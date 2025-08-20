@@ -1,0 +1,14 @@
+package mdbook-katla
+
+authors = "Nathan McCarty <thatonelutenist@stranger.systems>"
+version = 0.1.0
+sourcedir = "src"
+
+depends = base
+
+main = Preprocessor.Binary
+
+executable = "mdbook-katla"
+
+modules = Preprocessor
+        , Preprocessor.Binary

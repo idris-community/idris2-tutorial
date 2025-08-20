@@ -115,3 +115,4 @@ modules = Appendices.Neovim
         -- ** Part 2: By Example **
         -- Chapter 15: An MDBook Preprocessor in Idris 2
         , Preprocessor
+        , Preprocessor.Binary

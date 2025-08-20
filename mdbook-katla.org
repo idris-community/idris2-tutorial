@@ -1,0 +1,7 @@
+* Missing Functionality From Build Script
+** TODO Process bare idris source files
+Will likely need a special subcommand of mdbook-katla for this
+* Essentials
+** TODO Update CI
+=pack build= is ambigous now, we have two ipkgs. Should probably build both of them
+** TODO Install preprocessor with pack install-app

@@ -141,16 +141,16 @@ ______________________________________________________________________
 
 # Exercise Solutions
 
-- [Introductory Function Exercises](./Solutions/Functions1.md)
-- [Algebraic Data Types](./Solutions/DataTypes.md)
-- [Interfaces](./Solutions/Interfaces.md)
-- [Functions Part 2](./Solutions/Functions2.md)
-- [Dependent Types](./Solutions/Dependent.md)
-- [IO: Programming with Side Effects](./Solutions/IO.md)
-- [Functor and Friends](./Solutions/Functor.md)
-- [Recursion and Folds](./Solutions/Folds.md)
-- [Effectful Traversals](./Solutions/Traverse.md)
-- [Sigma Types](./Solutions/DPair.md)
-- [Propositional Equality](./Solutions/Eq.md)
-- [Predicates and Proof Search](./Solutions/Predicates.md)
-- [Primitives](./Solutions/Prim.md)
+<!-- - [Introductory Function Exercises](./Solutions/Functions1.md) -->
+<!-- - [Algebraic Data Types](./Solutions/DataTypes.md) -->
+<!-- - [Interfaces](./Solutions/Interfaces.md) -->
+<!-- - [Functions Part 2](./Solutions/Functions2.md) -->
+<!-- - [Dependent Types](./Solutions/Dependent.md) -->
+<!-- - [IO: Programming with Side Effects](./Solutions/IO.md) -->
+<!-- - [Functor and Friends](./Solutions/Functor.md) -->
+<!-- - [Recursion and Folds](./Solutions/Folds.md) -->
+<!-- - [Effectful Traversals](./Solutions/Traverse.md) -->
+<!-- - [Sigma Types](./Solutions/DPair.md) -->
+<!-- - [Propositional Equality](./Solutions/Eq.md) -->
+<!-- - [Predicates and Proof Search](./Solutions/Predicates.md) -->
+<!-- - [Primitives](./Solutions/Prim.md) -->

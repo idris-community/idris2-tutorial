@@ -7,6 +7,8 @@ title = "Idris 2 Tutorial"
 [build]
 create-missing = false
 
+## Output configuration
+
 [output.html]
 preferred-dark-theme = "ayu"
 default-theme = "rust"
@@ -20,4 +22,15 @@ page-break = true
 enable = true
 level = 0
 
+## Preprocessor configuration
+
+# Due to the fact that we are shelling out to katla, and katla requires direct access to
+# the raw source file, something that's kind of janky in the mdbook model, it needs to be
+# run before all other preprocessors. All other preprocessors must have an
+# `after = ["katla"]` declaration.
+
+[preprocessor.katla]
+command = "./build/exec/mdbook-katla"
+
 [preprocessor.alerts]
+after = ["katla"]

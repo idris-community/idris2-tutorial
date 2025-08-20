@@ -3,9 +3,9 @@
 ```idris
 module Preprocessor.Binary
   
+import Data.Maybe
 import Data.SortedMap
 import Data.String
-import Data.Maybe
 
 import System
 

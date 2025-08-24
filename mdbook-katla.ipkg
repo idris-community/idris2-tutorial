@@ -5,6 +5,7 @@ version = 0.1.0
 sourcedir = "src"
 
 depends = base
+        , json
 
 main = Preprocessor.Binary
 
@@ -12,3 +13,4 @@ executable = "mdbook-katla"
 
 modules = Preprocessor
         , Preprocessor.Binary
+        , Preprocessor.JSON

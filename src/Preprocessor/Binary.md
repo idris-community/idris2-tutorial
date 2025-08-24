@@ -9,6 +9,8 @@ import Data.String
 
 import System
 
+import Preprocessor.JSON
+
 %default total
 ```
 
@@ -16,10 +18,6 @@ import System
 -- Temporary definitions that refer to names that will be defined in other modules
 data Book : Type
 %name Book book
-data Context : Type
-%name Context ctx
-  
-(.renderer) : Context -> String
 
 toJSON : Book -> String
 ```
@@ -43,6 +41,7 @@ parseArgs : IO (Either String Args)
 parseArgs = do
   (_ :: args) <- getArgs
     | [] => pure $ Left "Somehow didn't have the executable name argument"
+  putStrLn "Parsing Arguments: \{show args}"
   case args of
     [] => pure . Right $ NoArguments
     ["supports", backend] => pure . Right $ Supports backend
@@ -68,6 +67,8 @@ unwrapCtx ctx (Right x) = pure x
 
 ```idris
 parseStdin : IO (Either String (Context, Book))
+parseStdin = do
+  pure (Left "Not Yet implemented")
 ```
 
 
@@ -81,6 +82,7 @@ While we only support the `html` backend right now, we might want to support oth
 
 ```idris
 html : (Context, Book) -> Either String Book
+html (ctx, book) = ?html_rhs
 ```
 
 #### The Map
@@ -96,7 +98,7 @@ Since the list of supported backend's was implicitly defined in `implementationM
 
 ```idris
 supports : (backend : String) -> IO ()
-supports backend = 
+supports backend = do
   if isJust $ lookup backend implementationMap
     then exitSuccess
     else exitFailure

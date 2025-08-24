@@ -4,6 +4,7 @@ authors    = "stefan-hoeck"
 version    = 0.1.0
 sourcedir  = "src"
 depends    = base         >= 0.6.0
+           , json
 
 modules = Appendices.Neovim
         , Appendices.Projects
@@ -116,3 +117,4 @@ modules = Appendices.Neovim
         -- Chapter 15: An MDBook Preprocessor in Idris 2
         , Preprocessor
         , Preprocessor.Binary
+        , Preprocessor.JSON

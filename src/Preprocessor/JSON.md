@@ -132,7 +132,7 @@ record Context where
 
 ### `BookItem`
 
-[`BookItem`] gets a little _fun_ because it's a mutually recursive data type, so we'll have to make a forward declaration.
+[`BookItem`](https://docs.rs/mdbook/latest/mdbook/book/enum.BookItem.html) gets a little _fun_ because it's a mutually recursive data type, so we'll have to make a forward declaration.
 
 ```idris
 public export

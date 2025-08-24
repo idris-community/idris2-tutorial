@@ -22,7 +22,26 @@ Rust and Idris are different languages, and the dominant derivable encoding libr
 ```idris
 export
 serde : Options
-serde = { sum := ObjectWithSingleField } defaultOptions
+serde = { sum := ObjectWithSingleField, replaceMissingKeysWithNull := True } defaultOptions
+  
+ne : String -> String
+ne "non_exhaustive" = "__non_exhaustive"
+ne x = x
+
+export
+serdeNE : Options
+serdeNE = {fieldNameModifier := ne} serde
+
+kebabCase : String -> String
+kebabCase = pack . map convertChar . unpack
+  where
+    convertChar : Char -> Char
+    convertChar '_' = '-'
+    convertChar c = c
+
+export
+serdeKebab : Options
+serdeKebab = {fieldNameModifier := kebabCase} serde
 ```
 
 ## The `PreprocessorContext` Type
@@ -62,7 +81,6 @@ record BookConfig where
   authors : List String
   description : Maybe String
   src : Path
-  multilingual : Bool
   text_direction : Maybe TextDirection
 
 %name BookConfig bookCfg
@@ -83,7 +101,7 @@ record BuildConfig where
   extra_watch_dirs: List Path
 
 %name BuildConfig buildCfg
-%runElab derive "BuildConfig" [Show, Eq, customToJSON Export serde, customFromJSON Export serde]
+%runElab derive "BuildConfig" [Show, Eq, customToJSON Export serdeKebab, customFromJSON Export serdeKebab]
 ```
 
 #### RustConfig
@@ -183,15 +201,79 @@ We'll have to do something a little bit special to apply the JSON derives here, 
 %runElab deriveMutual ["ChapterItem", "BookItem"] [Show, Eq, customToJSON Export serde, customFromJSON Export serde]
 ```
 
-### `Book` Proper
+## `Book` Proper
 
 With everything else written, we only need to provide an equivalent of [`Book`](https://docs.rs/mdbook/latest/mdbook/book/struct.Book.html):
 
 ```idris
 public export
 record Book where
+  constructor MkBook
   sections: List BookItem
+  -- FIXME: For some reason we need this in here to get json-simple to behave and not just reduce this type to a list
+  non_exhaustive: Maybe Bool
 
 %name Book book
-%runElab derive "Book" [Show, Eq, customToJSON Export serde, customFromJSON Export serde]
+%runElab derive "Book" [Show, Eq, customToJSON Export serdeNE, customFromJSON Export serdeNE]
+```
+
+## Interactive Testing
+
+```idris
+exampleBookConfig : BookConfig
+exampleBookConfig = MkBookCfg
+  { title = Just "Idris 2 Book"
+  , authors = ["Me", "You"]
+  , description = Just "A Book"
+  , src = "."
+  , text_direction = Nothing
+  }
+
+exampleBuildConfig : BuildConfig
+exampleBuildConfig = MkBuildCfg
+  { build_dir = "."
+  , create_missing = True
+  , use_default_preprocessors = True
+  , extra_watch_dirs = []
+  }
+
+exampleRustConfig : RustConfig
+exampleRustConfig = MkRustCfg Nothing
+
+exampleConfig : Config
+exampleConfig = MkCfg
+  { book = exampleBookConfig
+  , build = exampleBuildConfig
+  , rust = exampleRustConfig
+  }
+
+exampleContext : Context
+exampleContext = MkCtx 
+  { root = "."
+  , config = exampleConfig
+  , renderer = "html" 
+  , mdbook_version = "0.0.0"
+  } 
+  
+exampleChapter : BookItem
+exampleChapter = Chapter $ MkChapter
+  { name = "Name"
+  , content = "Content"
+  , number = Just [1, 2, 3]
+  , sub_items = []
+  , path = Nothing
+  , source_path = Nothing
+  , parent_names = []
+  }
+
+exampleBook : Book
+exampleBook = MkBook [ exampleChapter, Seperator ] Nothing
+
+examplePair : (Context, Book) 
+examplePair = (exampleContext, exampleBook)
+
+example : IO ()
+example = do
+  let output = encode examplePair
+  putStrLn output
 ```

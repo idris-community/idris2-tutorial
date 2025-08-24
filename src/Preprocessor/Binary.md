@@ -6,8 +6,11 @@ module Preprocessor.Binary
 import Data.Maybe
 import Data.SortedMap
 import Data.String
-
+import Data.List.Quantifiers
 import System
+import System.File
+
+import JSON.Simple
 
 import Preprocessor.JSON
 
@@ -16,10 +19,6 @@ import Preprocessor.JSON
 
 ```idris hide
 -- Temporary definitions that refer to names that will be defined in other modules
-data Book : Type
-%name Book book
-
-toJSON : Book -> String
 ```
 
 ## Argument Parsing 
@@ -58,16 +57,29 @@ Since we are working in the context of `IO` we can """safely""" unwrap an `Eithe
 ```idris
 unwrapCtx : Interpolation a => (ctx : Lazy String) -> Either a b -> IO b
 unwrapCtx ctx (Left x) = do
-  putStrLn "Error: \{ctx}\n  \{x}"
+  _ <- fPutStrLn stderr "Error: \{ctx}\n  \{x}"
   exitFailure
 unwrapCtx ctx (Right x) = pure x
+
+Interpolation FileError where 
+  interpolate = show
+
+Interpolation DecodingErr where
+  interpolate = show
 ```
 
 ## Parsing the Book Data
 
+We need to read all of the input from standard in and parse it as our `[Context, Book]`, handling any errors that crop up.
+
 ```idris
+partial
 parseStdin : IO (Either String (Context, Book))
 parseStdin = do
+  input <- unwrapCtx "Reading from standard input" =<< fRead stdin
+  _ <- writeFile "output.json" input
+  output : HList [Context, Book] <- unwrapCtx "Decoding JSON" $ decode input
+  ?what
   pure (Left "Not Yet implemented")
 ```
 
@@ -125,6 +137,7 @@ routeBook (ctx, book) =
 Our main simply glues it all together, matching on the parsed arguments, and delegating most of the rest of the work to the appropriate implementations.
 
 ```idris
+partial
 main : IO ()
 main = do
   args <- parseArgs >>= unwrapCtx "Parsing Arguments"
@@ -133,7 +146,7 @@ main = do
     NoArguments => do
       pair <- parseStdin >>= unwrapCtx "Parsing Input" 
       output <- routeBook pair
-      putStr (toJSON output)
+      putStr (encode output)
       exitSuccess
 ```
 

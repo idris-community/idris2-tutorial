@@ -126,3 +126,39 @@ record Context where
 %name Context ctx
 %runElab derive "Context" [Show, Eq, ToJSON, FromJSON]
 ```
+
+
+## Book 
+
+### `BookItem`
+
+[`BookItem`] gets a little _fun_ because it's a mutually recursive data type, so we'll have to make a forward declaration.
+
+```idris
+public export
+data BookItem : Type
+
+public export
+data SectionNumber : Type where
+  MkSectionNumber : List Nat -> SectionNumber
+
+public export
+record ChapterItem where
+  constructor MkChapter
+  name : String
+  content : String
+  number : Maybe SectionNumber
+  sub_items : List BookItem
+  path : Maybe Path
+  source_path : Maybe Path
+  parent_names : List String
+
+public export
+data BookItem : Type where
+  Chapter : ChapterItem -> BookItem
+  Seperator : BookItem
+  PartTitle : String -> BookItem
+
+%runElab derive "ChapterItem" [Show, Eq, ToJSON, FromJSON]
+%runElab derive "BookItem" [Show, Eq, ToJSON, FromJSON]
+```

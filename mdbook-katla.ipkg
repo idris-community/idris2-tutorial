@@ -5,7 +5,8 @@ version = 0.1.0
 sourcedir = "src"
 
 depends = base
-        , json
+        , json-simple
+        , elab-util
 
 main = Preprocessor.Binary
 

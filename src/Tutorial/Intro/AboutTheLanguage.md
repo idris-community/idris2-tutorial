@@ -8,7 +8,7 @@ Lets break that down and explore what each of those terms means on their own.
 
 In functional programming languages, functions are *first-class constructs*, meaning that they can be assigned to variables, passed as arguments to other functions, and returned as results from functions, just like any other value in the language. Unlike in, for instance, object-oriented languages, functions are the main form of abstraction in functional programming.
 
-Whenever we find a common pattern or (almost) identical code in several parts of a project, we try to implement an abstraction over it to avoid write the same code multiple times. In functional programming, we do this by introducing one or more new functions implementing the required behavior, often trying to be as general as possible to maximize the versatility and re-usability of our functions.
+Whenever we find a common pattern or (almost) identical code in several parts of a project, we try to implement an abstraction over it to avoid writing the same code multiple times. In functional programming, we do this by introducing one or more new functions implementing the required behavior, often trying to be as general as possible to maximize the versatility and re-usability of our functions.
 
 Functional programming languages are concerned with the evaluation of functions, unlike imperative languages, which are concerned with the execution of statements.
 

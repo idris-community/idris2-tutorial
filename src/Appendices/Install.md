@@ -6,7 +6,7 @@ Here I describe what I find to be the most convenient way to get up and running 
 
 In order to install the *pack* package manager together with a recent version of the Idris2 compiler, follow the instructions on [pack's GitHub page](https://github.com/stefan-hoeck/idris2-pack/blob/main/INSTALL.md).
 
-If all goes well, I suggest you take a moment to inspect the default settings available in your global `pack.toml` file, which can be found at `$HOME/.pack/user/pack.toml` (unless you explicitly set the `$PACK_DIR` environment variable to a different directory). If possible, I suggest you install the *rlwrap* tool and change the following setting in your global `pack.toml` file to `true`:
+If all goes well, I suggest you take a moment to inspect the default settings available in your global `pack.toml` file, which can be found at `$XDG_CONFIG_HOME/pack/pack.toml` (unless you explicitly set the `$PACK_USER_DIR` environment variable to a different directory). If possible, I suggest you install the *rlwrap* tool and change the following setting in your global `pack.toml` file to `true`:
 
 ```toml
 repl.rlwrap = true

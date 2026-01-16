@@ -12,9 +12,9 @@ In this section, we will explore the definition and use of generic types.
 
 ## Maybe
 
-Suppose we want to parse a value of the `Weekday` type, described in the section on enumerations, from user input. Such a parsing function should return `Saturday` if the user provided string was `"Saturday"`, but what should it return if the input were, say, `"sdfkl332"`? We have another of options here, for instance, we could return another "default" value, such as `Sunday`, but we must consider what behavior programmers using our library might expect. However, silently continuing with such a default value in the face of invalid user input is very rarely the best option, and can lead to a lot of confusion.
+Suppose we want to parse a value of the `Weekday` type, described in the section on enumerations, from user input. Such a parsing function should return `Saturday` if the user provided string was `"Saturday"`, but what should it return if the input were, say, `"sdfkl332"`? We have a number of options here. For instance, we could return another "default" value, such as `Sunday`, but we must consider what behavior programmers using our library might expect. Silently continuing with such a default value in the face of invalid user input is very rarely the best option, and can lead to a lot of confusion.
 
-If we were working in a traditional imperative language, our parsing function would probably throw an exception upon encountering such invalid input. Idris has the option to throw an exception too, through the [`idris_crash`](https://www.idris-lang.org/Idris2/prelude/docs/Builtin.html#Builtin.idris_crash) function in the *Prelude*, but we need to abandon totality to do this, our function would no longer return a value for every possible input. This is a high price to pay for something as commonplace as a parsing error.
+If we were working in a traditional imperative language, our parsing function would probably throw an exception upon encountering such invalid input. Idris has the option to throw an exception too, through the [`idris_crash`](https://www.idris-lang.org/Idris2/prelude/docs/Builtin.html#Builtin.idris_crash) function in the *Prelude*, but we need to abandon totality to do this: our function would no longer return a value for every possible input. This is a high price to pay for something as commonplace as a parsing error.
 
 In a language like Java, C#, or C++, our function *might* also return some sort of `null` value (leading to the dreaded `NullPointerException` if not handled properly in the consuming code). Our solution will be conceptually similar, but instead of silently returning a `null`, we will make the possibility of failure visible in the type. We'll define a custom data type, which encapsulates the possibility of failure.
 
@@ -42,7 +42,7 @@ Idris, like many other programming languages, allows us to generalize this behav
 > [!NOTE]
 > While the prelude calls this type `Maybe`, we are calling it `Option` to avoid conflict. We are also altering the names of the data constructors `Some` is equivlant to `Just`, and `None` is equivalent to `Nothing`.
 >
-> You may recognize the name `Option` from other programming languages, for instance, Rust uses the name `Option` to refer to this concept.
+> You may recognize the name `Option` from other programming languages, for instance, Rust uses the name `Option` to refer to this concept, and C++ uses `optional`.
 
 ```idris
 data Option a = Some a | None
@@ -81,11 +81,11 @@ safeDiv n 0 = None
 safeDiv n k = Some (n `div` k)
 ```
 
-It is important to understand the distinction between a function returning, say, `Maybe Integer` and returning `null` in a language like Java. In the former case, the possibility of failure is visible in the types, and as a result the type checker forces the programmer to deal with the possibility of the function returning `Nothing` you can't get an `Integer` out of a `Maybe Integer` without pattern matching on it and exposing the `Nothing`, and Idris doesn't let us forget to handle a case in a pattern match. This stands in stark contrast with the Java-esq approach, where `null` is implicitly a valid value of *every* pointer-backed type, and programmers may (and often *will*) forget to handle the `null` case, leading to unexpected and often hard to debug runtime exceptions.
+It is important to understand the distinction between a function returning, say, `Maybe Integer` and returning `null` in a language like Java. In the former case, the possibility of failure is visible in the types, and as a result the type checker forces the programmer to deal with the possibility of the function returning `Nothing`; you can't get an `Integer` out of a `Maybe Integer` without pattern matching on it and exposing the `Nothing`, and Idris doesn't let us forget to handle a case in a pattern match. This stands in stark contrast with the Java-esq approach, where `null` is implicitly a valid value of *every* pointer-backed type, and programmers may (and often *will*) forget to handle the `null` case, leading to unexpected and often hard to debug runtime exceptions.
 
 ## Either
 
-While `Maybe` is very useful for quickly encoding the possibilty of failure, the one value it can provide for the failure case, `Nothing`, isn't very informative, it doesn't encode any information about *what* went wrong. While there are many cases where this is sensible, for instance, if you are attempting to look up a value in a Map, a return value of `Nothing` can reasonably be assumed to mean the desired value wasn't present in the Map, there are many more cases where multiple things could have gone wrong and the user of or function would know to know which of the things actually did go wrong.
+While `Maybe` is very useful for quickly encoding the possibilty of failure, the one value it can provide for the failure case, `Nothing`, isn't very informative in that it doesn't encode any information about *what* went wrong. While there are many cases where this is sensible (for instance, if you are attempting to look up a value in a Map, a return value of `Nothing` can reasonably be assumed to mean the desired value wasn't present in the Map), there are many more cases where multiple things could have gone wrong and the user of or function would know to know which of the things actually did go wrong.
 
 As an example, in the case of our `Weekday` parsing function, it might be useful later on to know the value of the invalid input string. Just like with `Maybe`/`Option` in the previous section, this concept is general enough that we want to consider other types of invalid data.
 
@@ -168,7 +168,7 @@ The two definitions `ints` and `ints2` are treated identically by the compiler.
 
 `Seq` and `List` both have another special property, each of them is defined in terms of itself, due to the cons operating taking a value and *another* `List`/`Seq` as arguments. We call such data types *recursive* data types, and as a result of their recursive nature, decomposing or consuming them typically requires recursive functions.
 
-In a traditional imperative language, we might use a for loop, or similar construct, to iterate over the values of a `List`, but traditional loops don't exist in a lanugage without in-place mutation. Lets take a look at the recursive way of summing a list of integers:
+In a traditional imperative language, we might use a for loop, or similar construct, to iterate over the values of a `List`, but traditional loops don't exist in a lanugage without in-place mutation. Let's take a look at the recursive way of summing a list of integers:
 
 ```idris
 total
@@ -232,7 +232,7 @@ integerFromOption _ (Some y) = y
 integerFromOption x None     = x
 ```
 
-As the pattern of this section might imply, this approach isn't as general as we'd like, with a specialized implementation like this, we'd need similarly bespoke functions to break a value out of an `Option Bool`, or an `Option String`, or any other possible `Option` type. We can, of course, do better, with our generic `fromOption` function:
+As the pattern of this section might imply, this approach isn't as general as we'd like; with a specialized implementation like this, we'd need similarly bespoke functions to break a value out of an `Option Bool`, or an `Option String`, or any other possible `Option` type. We can, of course, do better, with our generic `fromOption` function:
 
 ```idris
 total

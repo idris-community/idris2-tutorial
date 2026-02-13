@@ -1,14 +1,12 @@
 # A Deep Dive into Quantitative Type Theory
 
-*This section was guest-written by [Kiana Sheibani](https://github.com/kiana-S).*
-
 In the tutorial proper, when discussing functions, Idris 2's quantity system was introduced. The description was intentionally a bit simplified - the inner workings of quantities are complicated, and that complication would have only confused any newcomers to Idris 2.
 
-Here, I'll provide a more proper and thorough treatment of Quantitative Type Theory (QTT), including how quantity checking is performed and the theory behind it. Most of the information here will be unnecessary for understanding and writing Idris programs, and you are free to keep thinking about quantities like they were explained before. When working with quantities in their full complexity, however, a better understanding of how they work can be helpful to avoid misconceptions.
+Here, we'll provide a more proper and thorough treatment of Quantitative Type Theory (QTT), including how quantity checking is performed and the theory behind it. Most of the information here will be unnecessary for understanding and writing Idris programs, and you are free to keep thinking about quantities like they were explained before. When working with quantities in their full complexity, however, a better understanding of how they work can be helpful to avoid misconceptions.
 
 ## The Quantity Semiring
 
-Quantitative Type Theory, as you probably already know, uses a set of quantities. The core theory allows for any quantities to be used, but Idris 2 in particular has three: erased, linear, and unrestricted. These are usually written as `0`, `1`, and `ω` (the Greek lowercase omega) respectively.
+Quantitative Type Theory is based on a set of quantities. The core theory allows for any quantities to be used, but Idris 2 in particular has three: erased, linear, and unrestricted. These are usually written as `0`, `1`, and `ω` (the Greek lowercase omega) respectively.
 
 As QTT requires, these three quantities are equipped with the structure of an *ordered semiring*. The exact mathematical details of what that means aren't important; what it means for us is that quantities can be added and multiplied together, and that there is an ordering relation on them. Here are the tables for each of these operations, where the first argument is on the left and the second is on the top:
 
@@ -104,7 +102,7 @@ The quantity of the parameter `x` increased from `1` to `ω`, since we went from
 
 With all of that background information established, we can finally see how quantity checking actually works. Let's follow what happens to a single variable `x` in our context as we perform different operations.
 
-To illustrate how quantities evolve, I will provide Idris-style context diagrams showing the various cases. In these, capital-letter names `T`, `E`, etc. stand for any expression, and `q`, `r`, etc. stand for any quantity.
+To illustrate how quantities evolve, we will provide Idris-style context diagrams showing the various cases. In these, capital-letter names `T`, `E`, etc. stand for any expression, and `q`, `r`, etc. stand for any quantity.
 
 ### Variables and Literals
 
@@ -270,7 +268,7 @@ For this reason, the total uses of the variable `x` when pattern-matching on it 
 
 ## The Erased Fragment
 
-Earlier I stated that only variables in the context can have quantities, which in particular means top-level definitions cannot have them. This is *mostly* true, but there is one slight exception: a function can be marked as erased by placing a `0` before its name.
+Earlier we stated that only variables in the context can have quantities, which in particular means top-level definitions cannot have them. This is *mostly* true, but there is one slight exception: a function can be marked as erased by placing a `0` before its name.
 
 ```idris
 0 erasedId : (0 x : a) -> a
@@ -316,8 +314,6 @@ The information in this appendix is partially based on Robert Atkey's 2018 paper
 1. Atkey's theory does not have subusaging, and so the quantity semiring in Atkey's paper is not ordered.
 2. In Atkey's theory, types can only be constructed in the erased fragment, which means it is impossible to construct a type at runtime. Idris 2 allows constructing types at runtime, but still uses the erased fragment when inside of type signatures.
 
-To resolve these differences, I directly observed how Idris 2's type system behaved in practice in order to determine where to deviate from Atkey's paper.
-
-While I tried to be as mathematically accurate as possible in this section, some accuracy had to be sacrificed for the sake of simplicity. In particular, the description of pattern matching given here is substantially oversimplified. A proper formal treatment of pattern matching would require introducing an eliminator function for each datatype; this eliminator would serve to determine how that datatype's constructors interacted with quantity checking. The details of how this would work for a few simple types (such as the boolean type `Bool`) are in Atkey's paper above. I did not include these details because I decided that what I was describing was complicated enough already.
+While we have tried to be as mathematically accurate as possible in this section, some accuracy had to be sacrificed for the sake of simplicity. In particular, the description of pattern matching given here is substantially oversimplified. A proper formal treatment of pattern matching would require introducing an eliminator function for each datatype; this eliminator would serve to determine how that datatype's constructors interacted with quantity checking. The details of how this would work for a few simple types (such as the boolean type `Bool`) are in Atkey's paper above.
 
 <!-- vi: filetype=idris2:syntax=markdown -->

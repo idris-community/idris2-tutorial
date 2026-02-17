@@ -4,7 +4,7 @@
 module Tutorial.DataTypes.AltSyntax
 ```
 
-While the examples in the section about parameterized data types are short and concise, there is a slightly more verbose but much more general form for writing such definitions, which makes it much explicit what's going on. This form is generally considered to be preferable for all but the most basic of data definitions.
+While the examples in the section about parameterized data types are short and concise, there is a slightly more verbose but much more general form for writing such definitions, which makes it much more explicit what's going on. This form is generally considered to be preferable for all but the most basic of data definitions.
 
 Here are the definitions of `Option`, `Validated`, and `Seq` again, using this more general form:
 

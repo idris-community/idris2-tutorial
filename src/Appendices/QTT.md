@@ -10,7 +10,7 @@ Quantitative Type Theory is based on a set of quantities. The core theory allows
 
 As QTT requires, these three quantities are equipped with the structure of an *ordered semiring*. The exact mathematical details of what that means aren't important; what it means for us is that quantities can be added and multiplied together, and that there is an ordering relation on them. Here are the tables for each of these operations, where the first argument is on the left and the second is on the top:
 
-#### Addition
+### Addition
 
 |   `+`   | `0` | `1` | `ω` |
 | :-----: | :-: | :-: | :-: |
@@ -18,7 +18,7 @@ As QTT requires, these three quantities are equipped with the structure of an *o
 | **`1`** | `1` | `ω` | `ω` |
 | **`ω`** | `ω` | `ω` | `ω` |
 
-#### Multiplication
+### Multiplication
 
 |   `*`   | `0` | `1` | `ω` |
 | :-----: | :-: | :-: | :-: |
@@ -26,7 +26,7 @@ As QTT requires, these three quantities are equipped with the structure of an *o
 | **`1`** | `0` | `1` | `ω` |
 | **`ω`** | `0` | `ω` | `ω` |
 
-#### Order
+### Order
 
 |   `≤`   |  `0`  |  `1`  | `ω`  |
 | :-----: | :---: | :---: | :--: |

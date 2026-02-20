@@ -19,5 +19,3 @@ page-break = true
 [output.html.fold]
 enable = true
 level = 0
-
-[preprocessor.alerts]

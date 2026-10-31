@@ -24,7 +24,7 @@ Please note, that function and operator names within an individual a module must
 Tutorial.Functions1> :t Prelude.not
 Prelude.not : Bool -> Bool
 Tutorial.Functions1> :t Functions1.not
-Tutorial.Functions1.not : (Integer -> Bool) -> (Integer -> Bool) -> Integer -> Bool
+Tutorial.Functions1.not : (Integer -> Bool) -> Integer -> Bool
 ```
 
 ## What's next
